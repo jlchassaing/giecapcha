@@ -1,0 +1,11 @@
+_secure_image_src:
+  path: '/secure_image_src'
+  controller: Gie\SecureImage\Controller\SecureImageController::showImage
+
+_secure_image_js_path:
+  path: '/secure_image/securimage.js'
+  controller: Gie\SecureImage\Controller\SecureImageController::showJs
+
+_secure_image_play:
+  path: '/secure_image_play'
+  controller: Gie\SecureImage\Controller\SecureImageController::play

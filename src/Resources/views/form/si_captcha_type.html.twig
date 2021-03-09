@@ -1,0 +1,14 @@
+
+
+{% block si_captcha_widget %}
+    {% apply spaceless %}
+        {{ captcha_img | raw }}
+        {{ captcha_audio | raw }}
+        {{ captcha_refresh | raw }}
+        <div style="clear: both" ></div>
+        {{ captcha_label | raw }}
+        <div style="clear: both" ></div>
+        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        <input type="hidden" id="{{ captcha_id ~ "_captcha_id" }}" name="captcha_id" value="{{ captcha_id }}" />
+    {% endapply %}
+{% endblock %}

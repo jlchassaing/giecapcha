@@ -1,0 +1,4 @@
+gie_secure_image:
+  disable_flash_fallback: false
+  audio_path: "%kernel.project_dir%/public/bundles/giesecureimage/audio/fr"
+  ttf_file: "%kernel.project_dir%/vendor/dapphp/securimage/AHGBold.ttf"

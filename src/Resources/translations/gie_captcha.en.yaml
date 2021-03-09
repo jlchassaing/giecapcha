@@ -1,0 +1,5 @@
+input_text: 'Type the text'
+refresh_title_text: 'Refresh'
+refresh_alt_text: 'Refresh icon'
+image_alt_text: 'Captcha image'
+captcha_error: 'Please try again'

@@ -1,0 +1,22 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  Gie\SecureImage\Controller\SecureImageController:
+    tags:
+      - controller.service_arguments
+
+  Gie\SecureImage\Form\Extension\Core\Type\SICaptchaType: ~
+
+  Gie\SecureImage\Validator\Constraints\ValidCaptchaValidator:
+    arguments:
+      $session: '@session'
+      $translator: '@translator.default'
+    tags:
+      - { name: validator.constraint_validator, alias: 'si.captcha.valid' }
+
+  Gie\SecureImage\Provider\SecureImageConfig:
+    arguments:
+      $config: '%gie_secure_image%'

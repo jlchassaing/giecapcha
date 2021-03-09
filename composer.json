@@ -1,0 +1,14 @@
+{
+  "name": "gie/captcha",
+  "description": "Symfony connector php securimage package available on https://github.com/dapphp/securimage",
+  "type": "symfony-bundle",
+  "autoload": {
+    "psr-4": {
+      "Gie\\SecureImage\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=7.4",
+    "dapphp/securimage": "^4.0"
+  }
+}
