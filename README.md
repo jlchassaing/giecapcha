@@ -31,4 +31,12 @@ _gieSecureImageBundle:
 
 add a gie_secure_image.yaml file in config/packages
 
-multiple parameters are available
+multiple parameters are available. For example set captcha colors:
+
+```yaml
+gie_secure_image:
+    text_color: '#355689'
+    line_color: '#707070'
+    noise_color: '#707070'
+    image_bg_color: '#ffffff'
+```
