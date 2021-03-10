@@ -2,7 +2,7 @@
   "name": "gie/captcha",
   "description": "Symfony connector php securimage package available on https://github.com/dapphp/securimage",
   "type": "symfony-bundle",
-  "license": "BSD 2-Clause",
+  "license": "BSD-2-Clause",
   "autoload": {
     "psr-4": {
       "Gie\\SecureImage\\": "src/"
