@@ -22,7 +22,6 @@ class SecureImageController extends Controller
      */
     public function showImage(SecureImageConfig $configuration, Request $request)
     {
-        dump($request->getLocale());
         $img = new \Securimage($configuration->getConfig(['captchaId' => $request->get('id')]));
         ob_start();
         $img->show();
