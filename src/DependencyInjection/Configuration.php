@@ -27,6 +27,10 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('refresh_alt_text')->defaultNull()->end()
             ->scalarNode('image_alt_text')->defaultNull()->end()
             ->scalarNode('ttf_file')->defaultNull()->end()
+            ->scalarNode('text_color')->defaultValue('#707070')->end()
+            ->scalarNode('line_color')->defaultValue('#707070')->end()
+            ->scalarNode('noise_color')->defaultValue('#707070')->end()
+            ->scalarNode('image_bg_color')->defaultValue('#ffffff')->end()
             ->end();
 
         return $treeBuilder;
