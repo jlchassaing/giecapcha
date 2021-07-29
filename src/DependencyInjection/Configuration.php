@@ -31,6 +31,9 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('line_color')->defaultValue('#707070')->end()
             ->scalarNode('noise_color')->defaultValue('#707070')->end()
             ->scalarNode('image_bg_color')->defaultValue('#ffffff')->end()
+            ->booleanNode('no_session')->defaultValue(true)->end()
+            ->booleanNode('use_redis')->defaultValue(true)->end()
+            ->scalarNode('redis_server')->defaultNull()->end()
             ->end();
 
         return $treeBuilder;

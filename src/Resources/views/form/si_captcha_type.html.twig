@@ -1,14 +1,38 @@
-
-
 {% block si_captcha_widget %}
     {% apply spaceless %}
-        {{ captcha_img | raw }}
-        {{ captcha_audio | raw }}
-        {{ captcha_refresh | raw }}
-        <div style="clear: both" ></div>
-        {{ captcha_label | raw }}
-        <div style="clear: both" ></div>
-        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
-        <input type="hidden" id="{{ captcha_id ~ "_captcha_id" }}" name="captcha_id" value="{{ captcha_id }}" />
+        {# captcha_img | raw }#}
+        <div style="display: flex">
+            <div>
+                <img id="{{ captcha_id }}" src="{{ path('_secure_image_src', {id: captcha_id}) }}" alt="captcha image" aria-hidden="true" />
+            </div>
+            <div>
+                <div style="display: flex">
+                    <div id="{{ captcha_id ~ '_audio_div' }}">
+                        <audio id="{{ captcha_id ~ '_audio' }}" preload="none" style="display: none">
+                            <source id="{{ captcha_id ~ '_source_wav' }}" src="{{ path('_secure_image_play', {id: captcha_id}) }}" type="audio/wav">
+                        </audio>
+                    </div>
+
+                    <div id="{{ captcha_id ~ '_audio_controls' }}">
+                        <a tabindex="0" style="box-shadow: none" aria-label="{{ 'listen.captcha.audio'|trans }}" class="captcha_play_button" href="{{ path('_secure_image_play', {id: captcha_id}) }}" onclick="return false">
+                            <svg class="captcha_play_image" aria-hidden="true"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M10 7.22L6.603 10H3v4h3.603L10 16.78V7.22zM5.889 16H2a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h3.889l5.294-4.332a.5.5 0 0 1 .817.387v15.89a.5.5 0 0 1-.817.387L5.89 16zm13.517 4.134l-1.416-1.416A8.978 8.978 0 0 0 21 12a8.982 8.982 0 0 0-3.304-6.968l1.42-1.42A10.976 10.976 0 0 1 23 12c0 3.223-1.386 6.122-3.594 8.134zm-3.543-3.543l-1.422-1.422A3.993 3.993 0 0 0 16 12c0-1.43-.75-2.685-1.88-3.392l1.439-1.439A5.991 5.991 0 0 1 18 12c0 1.842-.83 3.49-2.137 4.591z"/></svg>
+                            <svg class="captcha_loading_image rotating" aria-hidden="true" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M18.364 5.636L16.95 7.05A7 7 0 1 0 19 12h2a9 9 0 1 1-2.636-6.364z"/></svg>
+                           {#  <img class="captcha_loading_image rotating" aria-hidden="true" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAADgklEQVRoge3ZTagVZRzH8c+55ksmt8yEIIkgSMxLIAp1b6kllUFGi6hFVJsoKGoXtIl21doWRq0q0EoigoTSiqK3TRYUBSFdykVQat30pmnlPS2eMzjzzNxzZu7MOecKfuGBeZ55Xn7/eV7n/3CO4dJqqJ5luB7L8XoqfRSHMY1f8SO+xaf4DH831P6cWSsIPoG2IDDN0k56UZjGLtw4KLFFXIWZlKgZXJR6v8jsBqTDV9g6CMEXF6TtjcRsSb0bUc6AJLyDy/qk3b34E5ui9Ds7jU9iB66O3i/ESqzHA9iJQ2Y3Ygp3NCm8hWdSDUwKkzZhAcZVWxBGsBnvKjZiBk/WFZ5wT0EDO5qqXOiZTwraaOO5Jhpo4flUpSfwUBMVp1iAp/CvvBGN9EQL2/EbNjRR4SzcgKPyw6nynDi/IK2FS+uoK8kEjska8buKq9M+vCLsrMNgk/xwerts4btShX7Btj4ILMPT8vOh52bXwjdRob3909iV8/BFpOXLXoVWCxtJUuC/Ttqw2CDfC/FGmmMpHsR+vNZPdSXZJ2vAriqFl/RDUUW2yBpwzPzQVZoR+bPT1vTLhFXC8JlvzOCDKG0ieUgb8ILQPd/hVcOdvDHvR/F1RZl+kO2mwkxDYkJW2/dFmf6IMq0YlLoSXCl/tMjxT5Rp4aDUleACWW2nijJdOEhFFVksa8DJ5EV6Eh8dsKgqjEbx6eRhxNnB5VH8cPJQZMBKYaMY66eiiqyJ4geSh7QB9+GgsOu9h0f7r6s0G6N44TJ6m+xEmdSc67EOLfwsq+2WoozLnHERJuHawWjsykZZTcd1OfK8gdPC1n234C0YNrtlDdjZLfMaXDEAUWUZEz5oz+EzX/lQVvzXKs7LUbyEhxuX1pvH5H8nKzkYbnZm9p/EdQ0L7MZ4p820+D1VKlgh7yE7hGsalVnMWhyJ2p4yh7l5u+CViI+xE90K1WRcXnxb8FXNiUcKKjuFxzW7ybWEMR8Pm7bg4KrFswWVtgWXeBNDagwfzdLG9gbqB0/I3oUl4TTeFC7qqvRIS9hhd8uv8419+ZhtisdnEg4KS+79wqXFJcKPyKLO83rhwPgifupSz5QaY74Xq/BWl8brhj0GdBK4Vd7xWifsNyQv+Ga8LH8hUSYcFw5mtc42TS2FS4Q1/CZhVVkt3OYkt5l/CddTB4SfkY/xuXB8P8dZzf/UPobMGbQP8QAAAABJRU5ErkJggg==" alt="Loading audio" style="display: none"/> #}
+                        </a><noscript>Enable Javascript for audio controls</noscript>
+                    </div>
+
+                    <script type="text/javascript" src="{{ asset('bundles/giesecureimage/securimage.js') }}"></script>
+                    <script type="text/javascript">
+                        {{ captcha_id ~ '_audioObj' }} = new SecurimageAudio({ audioElement: '{{ captcha_id ~ '_audio' }}', controlsElement: '{{ captcha_id ~ '_audio_controls' }}'});
+                    </script>
+                    <a tabindex="0" style="border: 0; box-shadow: none;" href="#" aria-label="Renouveller le captcha" onclick="securimageRefreshCaptcha('{{ captcha_id }}', '{{ captcha_id ~ '_audioObj' }}'); this.blur(); return false">
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M5.463 4.433A9.961 9.961 0 0 1 12 2c5.523 0 10 4.477 10 10 0 2.136-.67 4.116-1.81 5.74L17 12h3A8 8 0 0 0 6.46 6.228l-.997-1.795zm13.074 15.134A9.961 9.961 0 0 1 12 22C6.477 22 2 17.523 2 12c0-2.136.67-4.116 1.81-5.74L7 12H4a8 8 0 0 0 13.54 5.772l.997 1.795z"/></svg>
+                    </a>
+                </div>
+
+                <input type="text" tabindex="0" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+              <input type="hidden" id="{{ captcha_id ~ "_captcha_id" }}" name="captcha_id" value="{{ captcha_id }}" />
+            </div>
+        </div>
     {% endapply %}
 {% endblock %}

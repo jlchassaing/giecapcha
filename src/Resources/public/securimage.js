@@ -93,12 +93,12 @@ SecurimageAudio.prototype.init = function() {
     for (var i = 0; i < children.length; ++i) {
         var el = children[i];
         if (undefined != el.className) {
-            if (el.className.indexOf('play_button') >= 0) {
+            if (el.className.toString().indexOf('play_button') >= 0) {
                 this.playButton = el;
                 el.addEventListener('click', this.play.bind(this), false);
-            } else if (el.className.indexOf('play_image') >= 0) {
+            } else if (el.className.toString().indexOf('play_image') >= 0) {
                 this.playButtonImage = el;
-            } else if (el.className.indexOf('loading_image') >= 0) {
+            } else if (el.className.toString().indexOf('loading_image') >= 0) {
                 this.loadingImage = el;
             }
         }

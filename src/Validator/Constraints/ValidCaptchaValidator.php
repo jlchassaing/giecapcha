@@ -7,12 +7,15 @@
 namespace Gie\SecureImage\Validator\Constraints;
 
 
+use Gie\SecureImage\Provider\SecureImageConfig;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ValidCaptchaValidator extends ConstraintValidator
+class ValidCaptchaValidator
 {
     /** @var \Symfony\Component\HttpFoundation\Session\SessionInterface  */
     private SessionInterface $session;
@@ -20,22 +23,27 @@ class ValidCaptchaValidator extends ConstraintValidator
     /** @var \Symfony\Contracts\Translation\TranslatorInterface  */
     private TranslatorInterface $translator;
 
-    public function __construct(SessionInterface $session, TranslatorInterface $translator)
+    private $config;
+
+    public function __construct(SessionInterface $session, TranslatorInterface $translator, SecureImageConfig $config)
     {
         $this->session = $session;
         $this->translator = $translator;
+        $this->config = $config;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function validate($value, Constraint $constraint)
+    public function validate(FormEvent $event)
     {
+        $value = $event->getData();
+        $form = $event->getForm();
 
-        $secureImage = new \Securimage();
+        $secureImage = new \Securimage($this->config->getConfig());
 
-        if ($secureImage->check($value, $this->session->get('captcha_id')) == false) {
-            $this->context->addViolation($this->translator->trans('captcha_error', [], 'gie_captcha'));
+        if ($secureImage->check($value) === false) {
+            $form->addError(new FormError($this->translator->trans('captcha_error', [], 'gie_captcha')));
         }
     }
 }

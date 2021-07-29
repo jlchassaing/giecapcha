@@ -10,12 +10,12 @@ services:
 
   Gie\SecureImage\Form\Extension\Core\Type\SICaptchaType: ~
 
-  Gie\SecureImage\Validator\Constraints\ValidCaptchaValidator:
-    arguments:
-      $session: '@session'
-      $translator: '@translator.default'
-    tags:
-      - { name: validator.constraint_validator, alias: 'si.captcha.valid' }
+#  Gie\SecureImage\Validator\Constraints\ValidCaptchaValidator:
+#    arguments:
+#      $session: '@session'
+#      $translator: '@translator.default'
+#    tags:
+#      - { name: validator.constraint_validator, alias: 'si.captcha.valid' }
 
   Gie\SecureImage\Provider\SecureImageConfig:
     arguments:
