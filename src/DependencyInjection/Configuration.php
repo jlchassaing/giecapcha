@@ -21,6 +21,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('show_image_url')->defaultNull()->end()
             ->scalarNode('audio_play_url')->defaultNull()->end()
             ->scalarNode('audio_path')->defaultNull()->end()
+            ->scalarNode('audio_noise_path')->defaultNull()->end()
             ->scalarNode('securimage_path')->defaultValue('/bundles/giesecureimage')->end()
             ->scalarNode('input_text')->defaultNull()->end()
             ->scalarNode('refresh_title_text')->defaultNull()->end()
