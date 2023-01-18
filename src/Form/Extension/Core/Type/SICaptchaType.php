@@ -65,7 +65,7 @@ class SICaptchaType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $id =  \Securimage::generateCaptchaId();
+        $id =  'sec_'.\Securimage::generateCaptchaId();
 
         $options += $this->config->getConfig([
             'captcha_id' => $id,
